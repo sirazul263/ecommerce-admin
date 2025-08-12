@@ -1,14 +1,12 @@
 "use client";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
-import { useGetProducts } from "@/features/products/api/use-get-products";
-import { columns } from "@/features/products/components/columns";
-import { DataTable } from "@/features/products/components/data-table";
-import { useStoreId } from "@/hooks/use-store-id";
+import { useGetCategories } from "@/features/categories/api/use-get-categories";
+import { columns } from "@/features/categories/components/columns";
+import { DataTable } from "@/features/categories/components/data-table";
 
-export const ProductClient = () => {
-  const storeId = useStoreId();
-  const { data: result, isLoading } = useGetProducts(storeId);
+export const CategoryClient = () => {
+  const { data: result, isLoading } = useGetCategories();
   if (isLoading) {
     return <PageLoader />;
   }

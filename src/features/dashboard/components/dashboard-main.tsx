@@ -4,10 +4,8 @@ import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
 import { useGetAnalytics } from "../api/use-get-analytics";
 import { Analytics } from "./analytics";
-import { useStoreId } from "@/hooks/use-store-id";
 export const DashboardMain = () => {
-  const storeId = useStoreId();
-  const { data: result, isLoading } = useGetAnalytics(storeId);
+  const { data: result, isLoading } = useGetAnalytics();
   if (isLoading) {
     return <PageLoader />;
   }

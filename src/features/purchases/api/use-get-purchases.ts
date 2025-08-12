@@ -3,7 +3,6 @@ import { getErrorMessage } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 export const useGetPurchases = (
-  storeId: string,
   page: number,
   supplier: string,
   purchasedBy: string,
@@ -23,7 +22,7 @@ export const useGetPurchases = (
       purchasedDate,
     ],
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/purchases`, {
+      const response = await axiosInstance.get(`/purchases`, {
         params: {
           page,
           supplier,

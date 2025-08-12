@@ -5,7 +5,6 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Supplier } from "../types";
 
 interface SupplierPayload {
-  store_id: string;
   id: number;
   name: string;
   email: string;
@@ -24,7 +23,7 @@ export const useUpdateSupplier = () => {
   const mutation = useMutation<ResponseType, Error, SupplierPayload>({
     mutationFn: async (payload) => {
       const response = await axiosInstance.put(
-        `${payload.store_id}/suppliers/${payload.id}`,
+        `/suppliers/${payload.id}`,
         payload
       );
       if (response.status !== 200 || response.data.status !== 1) {

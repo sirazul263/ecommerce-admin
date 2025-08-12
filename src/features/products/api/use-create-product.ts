@@ -4,7 +4,6 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Product } from "../types";
 
 interface ProductPayload {
-  store_id: string;
   category_id: string;
   brand_id: string;
   name: string;
@@ -23,10 +22,7 @@ export const useCreateProduct = () => {
 
   const mutation = useMutation<ResponseType, Error, ProductPayload>({
     mutationFn: async (payload) => {
-      const response = await axiosInstance.post(
-        `${payload.store_id}/products/create`,
-        payload
-      );
+      const response = await axiosInstance.post(`/products/create`, payload);
       return response.data;
     },
     onSuccess: () => {

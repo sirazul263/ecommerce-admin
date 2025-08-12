@@ -29,16 +29,16 @@ axiosInstance.interceptors.request.use(
 
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      Cookies.remove("userToken");
-      Cookies.remove("authUser");
-      Cookies.remove("store");
-      window.location.href = "/sign-in";
+    const status = error.response?.status;
+    const currentPath = window.location.pathname;
+
+    if (status === 401 && currentPath !== "/sign-in") {
+      Cookies.remove("authToken");
+      window.location.href = "/sign-in"; // OR use router.push("/sign-in")
     }
+
     return Promise.reject(error);
   }
 );

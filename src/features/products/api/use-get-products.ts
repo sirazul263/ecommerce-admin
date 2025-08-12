@@ -1,11 +1,11 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { getErrorMessage } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-export const useGetProducts = (storeId: string) => {
+export const useGetProducts = () => {
   const query = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/products`);
+      const response = await axiosInstance.get(`/products`);
       if (response.status !== 200) {
         return {
           status: response.status,

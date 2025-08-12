@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 
 export const useGetLogs = (
-  storeId: string,
   page: number,
   type: string,
   user: string,
@@ -14,7 +13,7 @@ export const useGetLogs = (
   const query = useQuery({
     queryKey: ["logs", page, type, user, date], // Include params in query key
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/logs`, {
+      const response = await axiosInstance.get(`/logs`, {
         params: { page, type, user, date },
       });
       if (response.status !== 200) {

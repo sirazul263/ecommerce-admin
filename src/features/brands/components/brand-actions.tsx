@@ -10,7 +10,6 @@ import { useState } from "react";
 import { Brand } from "../types";
 import { useDeleteBrand } from "../api/use-delete-brand";
 import UpdateBrandModal from "./update-brand-modal";
-import { useStoreId } from "@/hooks/use-store-id";
 
 interface BrandActionsProps {
   data: Brand;
@@ -23,7 +22,6 @@ export const BrandActions = ({ data, children }: BrandActionsProps) => {
     "destructive"
   );
 
-  const storeId = useStoreId();
   const { mutate, isPending } = useDeleteBrand();
   const onDelete = async () => {
     const ok = await confirm();
@@ -31,7 +29,6 @@ export const BrandActions = ({ data, children }: BrandActionsProps) => {
       return;
     }
     mutate({
-      storeId,
       brandId: data.id,
     });
   };

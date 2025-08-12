@@ -108,19 +108,11 @@ const Sidebar = () => {
     },
   ];
 
-  const [storeName, setStoreName] = useState<string>("");
-  useEffect(() => {
-    const store = Cookies.get("store");
-    if (store) {
-      setStoreName(JSON.parse(store).name);
-    }
-  }, []);
-
   return (
     <aside className="h-full bg-neutral-100 p-4 w-full">
       <Link href="/">
         <div className="flex items-center">
-          <p className="font-bold">{storeName}</p>
+          <p className="font-bold">Amirul Telecom</p>
         </div>
       </Link>
       <DottedSeparator className="mt-4" />

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 
 export const useGetSells = (
-  storeId: string,
   page: number,
   invoiceId: string,
   customer: string,
@@ -28,7 +27,7 @@ export const useGetSells = (
       date,
     ],
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/sells`, {
+      const response = await axiosInstance.get(`/sells`, {
         params: {
           page,
           invoiceId: debouncedInvoice,

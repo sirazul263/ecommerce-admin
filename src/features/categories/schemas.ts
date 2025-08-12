@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { Status } from "./types";
 
 export const createCategorySchema = z.object({
-  store_id: z.string(),
   name: z
     .string()
     .trim()
@@ -13,4 +13,5 @@ export const createCategorySchema = z.object({
       z.string().transform((value) => (value === "" ? undefined : value)),
     ])
     .optional(),
+  status: z.nativeEnum(Status),
 });

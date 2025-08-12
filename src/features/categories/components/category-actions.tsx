@@ -10,14 +10,12 @@ import { useState } from "react";
 import { Category } from "../types";
 import { useDeleteCategory } from "../api/use-delete-category";
 import UpdateCategoryModal from "./update-category-modal";
-import { useStoreId } from "@/hooks/use-store-id";
 
 interface CategoryActionsProps {
   data: Category;
   children: React.ReactNode;
 }
 export const CategoryActions = ({ data, children }: CategoryActionsProps) => {
-  const storeId = useStoreId();
   const [ConfirmDialog, confirm] = useConfirm(
     "Delete Category",
     "This action can not be undone",
@@ -31,7 +29,6 @@ export const CategoryActions = ({ data, children }: CategoryActionsProps) => {
       return;
     }
     mutate({
-      storeId: storeId,
       categoryId: data.id,
     });
   };

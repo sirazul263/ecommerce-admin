@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getCurrent } from "@/features/auth/queries";
 import { useChangePasswordModal } from "@/features/settings/hooks/use-change-password-modal";
-import { useStoreId } from "@/hooks/use-store-id";
 import { ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +14,7 @@ export const SettingsClient = () => {
   const [isClient, setIsClient] = useState(false);
   const user = isClient ? getCurrent() : null;
   const { open } = useChangePasswordModal();
-  const storeId = useStoreId();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export const SettingsClient = () => {
               size="sm"
               type="button"
               variant="secondary"
-              onClick={() => router.push(`/${storeId}`)}
+              onClick={() => router.push(`/`)}
             >
               <ArrowLeftIcon className="size-4 mr-2" />
               Back

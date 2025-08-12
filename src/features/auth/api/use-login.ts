@@ -12,11 +12,11 @@ interface LoginPayload {
 interface ResponseType {
   // Response HTTP status (e.g., 200)
   status: number; // Your API's custom status
-  access_token: string; // The authentication token
+  token: string; // The authentication token
   user: {
     email: string;
-    name: string;
-    role: string;
+    firstName: string;
+    lastName: string;
   };
 }
 export const useLogin = () => {
@@ -25,7 +25,7 @@ export const useLogin = () => {
 
   const mutation = useMutation<ResponseType, Error, LoginPayload>({
     mutationFn: async (payload) => {
-      const response = await axiosInstance.post(`login`, payload);
+      const response = await axiosInstance.post(`auth/admin-login`, payload);
       if (response.status !== 200 || response.data.status !== 1) {
         throw new Error(
           response.status !== 200
@@ -33,17 +33,20 @@ export const useLogin = () => {
             : getMessage(response.data)
         );
       }
-      return response.data;
+      if (response.data.user.isAdmin) {
+        return response.data;
+      } else {
+        throw new Error("You are not authorized person ");
+      }
     },
     onSuccess: (data) => {
-      const { access_token } = data;
+      const { token } = data;
       const user = {
         email: data.user.email,
-        name: data.user.name,
-        role: data.user.role,
+        name: `${data.user.firstName} ${data.user.lastName}`,
       };
 
-      Cookies.set("userToken", access_token, {
+      Cookies.set("userToken", token, {
         expires: 365, // Expires in 7 days
         secure: process.env.NODE_ENV === "production", // Only use secure cookies in production
         sameSite: "strict", // Prevent CSRF attacks

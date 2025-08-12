@@ -19,13 +19,12 @@ import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AlertTriangle, ImageIcon } from "lucide-react";
 import { useRef, useState } from "react";
-
 import { uploadImage } from "@/hooks/upload-image";
-import { Category } from "../types";
+import { Category, Status } from "../types";
 import { createCategorySchema } from "../schemas";
 import { useUpdateCategory } from "../api/use-update-category";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
+import { Switch } from "@/components/ui/switch";
 
 interface UpdateCategoryFormProps {
   onClose: () => void;
@@ -36,8 +35,6 @@ export const UpdateCategoryForm = ({
   onClose,
   initialValues,
 }: UpdateCategoryFormProps) => {
-  const storeId = useStoreId();
-
   const { mutateAsync, isPending } = useUpdateCategory();
 
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +46,7 @@ export const UpdateCategoryForm = ({
     defaultValues: {
       ...initialValues,
       image: initialValues.image ?? "",
+      status: initialValues.status as Status,
     },
   });
 
@@ -66,8 +64,7 @@ export const UpdateCategoryForm = ({
       ...values,
       image: image || "",
       id: initialValues.id,
-      is_active: initialValues.is_active,
-      store_id: storeId,
+      status: values.status,
     };
     try {
       setError(null);
@@ -190,6 +187,28 @@ export const UpdateCategoryForm = ({
                       </div>
                     </div>
                   </div>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <div className="space-y-0.5">
+                      <FormLabel>Status</FormLabel>
+                      <p className="text-sm text-muted-foreground">
+                        Update category status
+                      </p>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value === "ACTIVE"}
+                        onCheckedChange={(checked) =>
+                          field.onChange(checked ? "ACTIVE" : "INACTIVE")
+                        }
+                      />
+                    </FormControl>
+                  </FormItem>
                 )}
               />
             </div>

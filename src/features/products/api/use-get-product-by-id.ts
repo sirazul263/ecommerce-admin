@@ -2,16 +2,13 @@ import axiosInstance from "@/lib/axiosInstance";
 import { getErrorMessage } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 interface ProductProps {
-  storeId: string;
   productId: string | null;
 }
-export const useGetProductById = ({ storeId, productId }: ProductProps) => {
+export const useGetProductById = ({ productId }: ProductProps) => {
   const query = useQuery({
     queryKey: ["products", productId],
     queryFn: async () => {
-      const response = await axiosInstance.get(
-        `${storeId}/products/${productId}`
-      );
+      const response = await axiosInstance.get(`/products/${productId}`);
       if (response.status !== 200) {
         return {
           status: response.status,

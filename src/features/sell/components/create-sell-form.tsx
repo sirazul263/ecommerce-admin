@@ -39,7 +39,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ProductDetails } from "./product-details";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
 
 interface CreateSellFormProps {
@@ -51,7 +50,6 @@ interface OptionType {
 }
 export const CreateSellForm = ({ products }: CreateSellFormProps) => {
   const router = useRouter();
-  const storeId = useStoreId();
   const { mutateAsync, isPending } = useCreateSell();
   const [discountAmount, setDiscountAmount] = useState(0);
 
@@ -125,7 +123,6 @@ export const CreateSellForm = ({ products }: CreateSellFormProps) => {
       });
     }
     const finalValue = {
-      store_id: storeId,
       name: values.name,
       phone: `880${values.phone}`,
       address: values.address,
@@ -141,7 +138,7 @@ export const CreateSellForm = ({ products }: CreateSellFormProps) => {
     try {
       setError(null);
       await mutateAsync(finalValue);
-      router.push(`/${storeId}/sells`);
+      router.push(`/sells`);
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         setError(getErrorMessage(error.response.data));
@@ -203,7 +200,7 @@ export const CreateSellForm = ({ products }: CreateSellFormProps) => {
                   <div className="col-span-4 ">
                     <div
                       className="flex items-center  cursor-pointer pt-10"
-                      onClick={() => router.push(`/${storeId}/products/create`)}
+                      onClick={() => router.push(`/products/create`)}
                     >
                       <p className="text-xs uppercase font-bold text-neutral-500 ">
                         Add Product

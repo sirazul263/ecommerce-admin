@@ -4,7 +4,6 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Product } from "../types";
 
 interface ProductPayload {
-  store_id: string;
   id: number;
   category_id: string;
   brand_id: string;
@@ -25,7 +24,7 @@ export const useUpdateProduct = () => {
   const mutation = useMutation<ResponseType, Error, ProductPayload>({
     mutationFn: async (payload) => {
       const response = await axiosInstance.put(
-        `${payload.store_id}/products/${payload.id}`,
+        `/products/${payload.id}`,
         payload
       );
       return response.data;

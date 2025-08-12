@@ -9,7 +9,6 @@ import { PencilIcon, TrashIcon } from "lucide-react";
 import { Product } from "../types";
 import { useDeleteProduct } from "../api/use-delete-product";
 import { useRouter } from "next/navigation";
-import { useStoreId } from "@/hooks/use-store-id";
 
 interface ProductActionsProps {
   data: Product;
@@ -21,7 +20,7 @@ export const ProductActions = ({ data, children }: ProductActionsProps) => {
     "This action can not be undone",
     "destructive"
   );
-  const storeId = useStoreId();
+
   const { mutate, isPending } = useDeleteProduct();
   const onDelete = async () => {
     const ok = await confirm();
@@ -29,7 +28,6 @@ export const ProductActions = ({ data, children }: ProductActionsProps) => {
       return;
     }
     mutate({
-      storeId,
       productId: data.id,
     });
   };

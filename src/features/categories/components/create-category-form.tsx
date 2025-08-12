@@ -24,8 +24,8 @@ import { uploadImage } from "@/hooks/upload-image";
 import { useCreateCategoryModal } from "../hooks/use-create-category-modal";
 import { createCategorySchema } from "../schemas";
 import { useCreateCategory } from "../api/use-create-category";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
+import { Status } from "../types";
 
 interface CreateCategoryFormPros {
   onCancel?: () => void;
@@ -33,7 +33,6 @@ interface CreateCategoryFormPros {
 
 export const CreateCategoryForm = ({ onCancel }: CreateCategoryFormPros) => {
   const router = useRouter();
-  const storeId = useStoreId();
   const { mutateAsync, isPending } = useCreateCategory();
   const { close } = useCreateCategoryModal();
 
@@ -45,9 +44,9 @@ export const CreateCategoryForm = ({ onCancel }: CreateCategoryFormPros) => {
   const form = useForm<z.infer<typeof createCategorySchema>>({
     resolver: zodResolver(createCategorySchema),
     defaultValues: {
-      store_id: storeId,
       name: "",
       image: "",
+      status: Status.ACTIVE,
     },
   });
 
@@ -64,7 +63,6 @@ export const CreateCategoryForm = ({ onCancel }: CreateCategoryFormPros) => {
     const finalValues = {
       ...values,
       image: image || "",
-      is_active: true,
     };
     try {
       setError(null);

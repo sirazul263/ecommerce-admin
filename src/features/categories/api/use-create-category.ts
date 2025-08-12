@@ -4,10 +4,9 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Category } from "../types";
 
 interface CategoryPayload {
-  store_id: string;
   name: string;
   image: string | File;
-  is_active: boolean;
+  status: string;
 }
 interface ResponseType {
   // Response HTTP status (e.g., 200)
@@ -20,10 +19,7 @@ export const useCreateCategory = () => {
 
   const mutation = useMutation<ResponseType, Error, CategoryPayload>({
     mutationFn: async (payload) => {
-      const response = await axiosInstance.post(
-        `${payload.store_id}/categories/create`,
-        payload
-      );
+      const response = await axiosInstance.post(`/categories`, payload);
       return response.data;
     },
     onSuccess: () => {

@@ -2,13 +2,19 @@ export type Category = {
   id: number;
   name: string;
   slug: string;
-  is_active: boolean;
-  user: {
+  status: string;
+  createdBy: {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
   };
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
   image: string | null;
 };
+
+export enum Status {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}

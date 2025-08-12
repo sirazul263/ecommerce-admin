@@ -1,11 +1,11 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { getErrorMessage } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-export const useGetUsers = (storeId: string) => {
+export const useGetUsers = () => {
   const query = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/users`);
+      const response = await axiosInstance.get(`/users`);
       if (response.status !== 200) {
         return {
           status: response.status,

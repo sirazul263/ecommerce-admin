@@ -19,14 +19,12 @@ import { columns } from "@/features/purchases/components/columns";
 import { DataTable } from "@/features/purchases/components/data-table";
 import { useGetSuppliers } from "@/features/suppliers/api/use-get-suppliers";
 import { Supplier } from "@/features/suppliers/types";
-import { useStoreId } from "@/hooks/use-store-id";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RiAddCircleFill } from "react-icons/ri";
 
 export const PurchaseClient = () => {
   const router = useRouter();
-  const storeId = useStoreId();
   const [page, setPage] = useState(1); // Current page
   const [supplier, setSupplier] = useState("");
   const [purchasedBy, setPurchasedBy] = useState("");
@@ -35,7 +33,6 @@ export const PurchaseClient = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   const { data: result, isLoading: purchaseLoading } = useGetPurchases(
-    storeId,
     page,
     supplier,
     purchasedBy,
@@ -43,9 +40,8 @@ export const PurchaseClient = () => {
     paymentStatus,
     date
   );
-  const { data: suppliers, isLoading: supplierLoading } =
-    useGetSuppliers(storeId);
-  const { data: users, isLoading: usersLoading } = useGetUsers(storeId);
+  const { data: suppliers, isLoading: supplierLoading } = useGetSuppliers();
+  const { data: users, isLoading: usersLoading } = useGetUsers();
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -178,7 +174,7 @@ export const PurchaseClient = () => {
         <div className="flex items-center justify-end md:mt-6">
           <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => router.push(`/${storeId}/purchases/create`)}
+            onClick={() => router.push(`/purchases/create`)}
           >
             <p className="text-xs uppercase font-bold text-neutral-500 ">
               Add New Purchase

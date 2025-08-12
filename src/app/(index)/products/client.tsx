@@ -1,15 +1,12 @@
 "use client";
-
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
-import { useGetBrands } from "@/features/brands/api/use-get-brands";
-import { columns } from "@/features/brands/components/columns";
-import { DataTable } from "@/features/brands/components/data-table";
-import { useStoreId } from "@/hooks/use-store-id";
+import { useGetProducts } from "@/features/products/api/use-get-products";
+import { columns } from "@/features/products/components/columns";
+import { DataTable } from "@/features/products/components/data-table";
 
-export const BrandClient = () => {
-  const storeId = useStoreId();
-  const { data: result, isLoading } = useGetBrands(storeId);
+export const ProductClient = () => {
+  const { data: result, isLoading } = useGetProducts();
   if (isLoading) {
     return <PageLoader />;
   }

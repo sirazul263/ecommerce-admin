@@ -31,7 +31,6 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertTriangle, InfoIcon } from "lucide-react";
-
 import { customStyles, getErrorMessage, numberWithCommas } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { createPurchaseSchema } from "../schemas";
@@ -45,7 +44,6 @@ import { useCreateSupplierModal } from "@/features/suppliers/hooks/use-create-su
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
 import { DatePicker } from "@/components/date-picker";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
 
 interface CreatePurchaseFormProps {
@@ -62,7 +60,6 @@ export const CreatePurchaseForm = ({
   suppliers,
 }: CreatePurchaseFormProps) => {
   const router = useRouter();
-  const storeId = useStoreId();
 
   const { mutateAsync, isPending } = useCreatePurchase();
   const [supplier, setSupplier] = useState<Supplier | null>(null);
@@ -136,7 +133,6 @@ export const CreatePurchaseForm = ({
       });
     }
     const finalValue = {
-      store_id: storeId,
       supplier_id: values.supplier_id,
       purchase_date: format(values.purchase_date, "dd-MM-yyyy HH:mm:ss"),
       discount_type: values.discount_type,
@@ -150,7 +146,7 @@ export const CreatePurchaseForm = ({
     try {
       setError(null);
       await mutateAsync(finalValue);
-      router.push(`/${storeId}/purchases`);
+      router.push(`/purchases`);
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         setError(getErrorMessage(error.response.data));
@@ -351,7 +347,7 @@ export const CreatePurchaseForm = ({
                   <div className="col-span-4 ">
                     <div
                       className="flex items-center  cursor-pointer pt-10"
-                      onClick={() => router.push(`/${storeId}/products/create`)}
+                      onClick={() => router.push(`/products/create`)}
                     >
                       <p className="text-xs uppercase font-bold text-neutral-500 ">
                         Add Product

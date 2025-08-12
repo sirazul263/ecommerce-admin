@@ -33,7 +33,6 @@ import { getErrorMessage } from "@/lib/utils";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
 
 interface CreateProductFormPros {
@@ -54,7 +53,6 @@ export const CreateProductForm = ({
   brandOptions,
 }: CreateProductFormPros) => {
   const router = useRouter();
-  const storeId = useStoreId();
 
   const { mutateAsync, isPending } = useCreateProduct();
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +82,6 @@ export const CreateProductForm = ({
       setUploading(false);
     }
     const finalValue = {
-      store_id: storeId,
       category_id: values.categoryId,
       brand_id: values.brandId,
       name: values.name,
@@ -95,7 +92,7 @@ export const CreateProductForm = ({
     try {
       setError(null);
       await mutateAsync(finalValue);
-      router.push(`/${storeId}/products`);
+      router.push(`/products`);
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         setError(getErrorMessage(error.response.data));

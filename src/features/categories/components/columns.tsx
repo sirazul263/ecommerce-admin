@@ -6,7 +6,9 @@ import { format } from "date-fns";
 import { UserAvatar } from "@/features/members/components/user-avatar";
 import { DefaultAvatar } from "@/components/default-avatar";
 import { CategoryActions } from "./category-actions";
-import { Category } from "../types";
+import { Category, Status } from "../types";
+import { snakeCaseToTitleCase } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -24,8 +26,7 @@ export const columns: ColumnDef<Category>[] = [
       );
     },
     cell: ({ row }) => {
-      const name = row.original.name;
-      const image = row.original.image;
+      const { name, image } = row.original;
       return (
         <div className="flex items-center gap-x-2 ">
           <DefaultAvatar
@@ -59,7 +60,25 @@ export const columns: ColumnDef<Category>[] = [
     },
   },
   {
-    accessorKey: "user.name",
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0"
+        >
+          Status
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const status = row.original.status as Status;
+      return <Badge variant={status}>{snakeCaseToTitleCase(status)}</Badge>;
+    },
+  },
+  {
+    accessorKey: "createdBy.name",
     header: ({ column }) => {
       return (
         <Button
@@ -73,15 +92,17 @@ export const columns: ColumnDef<Category>[] = [
       );
     },
     cell: ({ row }) => {
-      const user = row.original.user;
+      const user = row.original.createdBy;
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
           <UserAvatar
             className="size-6"
             fallbackClassName="text-sm"
-            name={user.name}
+            name={user.firstName}
           />
-          <p className="line-champ-1">{user.name}</p>
+          <p className="line-champ-1">
+            {user.firstName} {user.lastName}
+          </p>
         </div>
       );
     },
@@ -101,7 +122,7 @@ export const columns: ColumnDef<Category>[] = [
       );
     },
     cell: ({ row }) => {
-      const createdAt = row.original.created_at;
+      const createdAt = row.original.createdAt;
       return (
         <p className="line-champ-1">
           {format(createdAt, "dd/MM/yyyy HH:mm:ss")}

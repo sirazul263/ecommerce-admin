@@ -2,13 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getErrorMessage, getMessage } from "@/lib/utils";
 import axiosInstance from "@/lib/axiosInstance";
-import { Category } from "../types";
+import { Category, Status } from "../types";
 
 interface CategoryPayload {
-  store_id: string;
   id: number;
   name: string;
-  is_active: boolean;
+  status: Status;
   image: string | File;
 }
 interface ResponseType {
@@ -23,7 +22,7 @@ export const useUpdateCategory = () => {
   const mutation = useMutation<ResponseType, Error, CategoryPayload>({
     mutationFn: async (payload) => {
       const response = await axiosInstance.put(
-        `${payload.store_id}/categories/${payload.id}`,
+        `/categories/${payload.id}`,
         payload
       );
       if (response.status !== 200 || response.data.status !== 1) {

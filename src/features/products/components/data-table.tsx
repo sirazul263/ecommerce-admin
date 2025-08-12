@@ -25,7 +25,6 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { RiAddCircleFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
-import { useStoreId } from "@/hooks/use-store-id";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,7 +36,6 @@ export const DataTable = <TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) => {
   const router = useRouter();
-  const storeId = useStoreId();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -70,7 +68,7 @@ export const DataTable = <TData, TValue>({
         />
         <div
           className="flex items-center justify-between cursor-pointer"
-          onClick={() => router.push(`/${storeId}/products/create`)}
+          onClick={() => router.push(`/products/create`)}
         >
           <p className="text-xs uppercase font-bold text-neutral-500 ">
             Add Product

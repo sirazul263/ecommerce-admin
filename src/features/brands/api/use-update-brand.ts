@@ -5,7 +5,6 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Brand } from "../types";
 
 interface BrandPayload {
-  store_id: string;
   id: number;
   name: string;
   is_active: boolean;
@@ -23,7 +22,7 @@ export const useUpdateBrand = () => {
   const mutation = useMutation<ResponseType, Error, BrandPayload>({
     mutationFn: async (payload) => {
       const response = await axiosInstance.put(
-        `${payload.store_id}/brands/${payload.id}`,
+        `/brands/${payload.id}`,
         payload
       );
       if (response.status !== 200 || response.data.status !== 1) {

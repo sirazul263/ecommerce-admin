@@ -7,12 +7,10 @@ import { useGetUsers } from "@/features/members/api/use-get-users";
 import { getColumns } from "@/features/members/components/columns";
 import { DataTable } from "@/features/members/components/data-table";
 import { useGetStores } from "@/features/store/api/use-get-stores";
-import { useStoreId } from "@/hooks/use-store-id";
 import { useEffect, useState } from "react";
 
 export const UserClient = () => {
-  const storeId = useStoreId();
-  const { data: users, isLoading: isLoadingUsers } = useGetUsers(storeId);
+  const { data: users, isLoading: isLoadingUsers } = useGetUsers();
   const { data: stores, isLoading } = useGetStores();
 
   const [isClient, setIsClient] = useState(false);

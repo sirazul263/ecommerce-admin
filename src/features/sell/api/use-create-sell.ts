@@ -4,7 +4,6 @@ import axiosInstance from "@/lib/axiosInstance";
 import { Product } from "@/features/products/types";
 
 interface SellPayload {
-  store_id: string; // Your store ID
   products: unknown; // Array of product IDs
   discount_type?: string; //,
   discount_amount?: number;
@@ -23,10 +22,7 @@ export const useCreateSell = () => {
 
   const mutation = useMutation<ResponseType, Error, SellPayload>({
     mutationFn: async (payload) => {
-      const response = await axiosInstance.post(
-        `${payload.store_id}/sells/create`,
-        payload
-      );
+      const response = await axiosInstance.post(`/sells/create`, payload);
       return response.data;
     },
     onSuccess: () => {

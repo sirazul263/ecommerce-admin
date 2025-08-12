@@ -34,7 +34,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { Product } from "../types";
 import { useUpdateProduct } from "../api/use-update-product";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
 
 interface UpdateProductFormProps {
@@ -57,7 +56,6 @@ export const UpdateProductForm = ({
   brandOptions,
 }: UpdateProductFormProps) => {
   const router = useRouter();
-  const storeId = useStoreId();
   const { mutateAsync, isPending } = useUpdateProduct();
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -86,7 +84,6 @@ export const UpdateProductForm = ({
       setUploading(false);
     }
     const finalValue = {
-      store_id: storeId,
       id: initialValue.id,
       category_id: values.categoryId,
       brand_id: values.brandId,
@@ -98,7 +95,7 @@ export const UpdateProductForm = ({
     try {
       setError(null);
       await mutateAsync(finalValue);
-      router.push(`/${storeId}/products`);
+      router.push(`/products`);
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         setError(getErrorMessage(error.response.data));

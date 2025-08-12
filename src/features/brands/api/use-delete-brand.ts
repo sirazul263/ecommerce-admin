@@ -3,7 +3,6 @@ import { toast } from "sonner";
 import axiosInstance from "@/lib/axiosInstance";
 
 interface ParamsType {
-  storeId: string;
   brandId: number;
 }
 
@@ -17,9 +16,7 @@ export const useDeleteBrand = () => {
 
   const mutation = useMutation<ResponseType, Error, ParamsType>({
     mutationFn: async (params: ParamsType) => {
-      const response = await axiosInstance.delete(
-        `${params.storeId}/brands/${params.brandId}`
-      );
+      const response = await axiosInstance.delete(`/brands/${params.brandId}`);
       return response.data;
     },
     onSuccess: () => {

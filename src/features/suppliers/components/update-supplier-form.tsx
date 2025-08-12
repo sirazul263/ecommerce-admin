@@ -20,7 +20,6 @@ import { useState } from "react";
 import { Supplier } from "../types";
 import { useUpdateSupplier } from "../api/use-update-supplier";
 import { createSupplierSchema } from "../schemas";
-import { useStoreId } from "@/hooks/use-store-id";
 import { AxiosError } from "axios";
 
 interface UpdateCategoryFormProps {
@@ -32,7 +31,6 @@ export const UpdateSupplierForm = ({
   onClose,
   initialValues,
 }: UpdateCategoryFormProps) => {
-  const storeId = useStoreId();
   const { mutateAsync, isPending } = useUpdateSupplier();
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +44,6 @@ export const UpdateSupplierForm = ({
   const onSubmit = async (values: z.infer<typeof createSupplierSchema>) => {
     const finalValues = {
       ...values,
-      store_id: storeId,
       id: initialValues.id,
     };
     try {

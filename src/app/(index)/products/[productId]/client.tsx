@@ -4,12 +4,10 @@ import PageLoader from "@/components/page-loader";
 import { useGetProductById } from "@/features/products/api/use-get-product-by-id";
 import { ProductFormWrapper } from "@/features/products/components/product-form-wrapper";
 import { useProductId } from "@/features/products/hooks/use-product-id";
-import { useStoreId } from "@/hooks/use-store-id";
 
 export const ProductIdClient = () => {
-  const storeId = useStoreId();
   const productId = useProductId();
-  const { data: result, isLoading } = useGetProductById({ storeId, productId });
+  const { data: result, isLoading } = useGetProductById({ productId });
 
   if (isLoading) {
     return <PageLoader />;

@@ -8,7 +8,6 @@ import { Category } from "@/features/categories/types";
 import { CreateProductForm } from "./create-product-form";
 import { Product } from "../types";
 import { UpdateProductForm } from "./update-product-form";
-import { useStoreId } from "@/hooks/use-store-id";
 interface ProductFormWrapperProps {
   initialValue?: Product | undefined;
 }
@@ -16,10 +15,9 @@ interface ProductFormWrapperProps {
 export const ProductFormWrapper = ({
   initialValue,
 }: ProductFormWrapperProps) => {
-  const storeId = useStoreId();
   const { data: categories, isLoading: isLoadingCategories } =
-    useGetCategories(storeId);
-  const { data: brands, isLoading: isLoadingBrands } = useGetBrands(storeId);
+    useGetCategories();
+  const { data: brands, isLoading: isLoadingBrands } = useGetBrands();
 
   const isLoading = isLoadingCategories || isLoadingBrands;
 

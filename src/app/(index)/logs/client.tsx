@@ -17,23 +17,20 @@ import { DataTable } from "@/features/logs/components/data-table";
 import { useGetUsers } from "@/features/members/api/use-get-users";
 import { UserAvatar } from "@/features/members/components/user-avatar";
 import { User } from "@/features/members/types";
-import { useStoreId } from "@/hooks/use-store-id";
 import { useState } from "react";
 
 export const LogsClient = () => {
-  const storeId = useStoreId();
   const [page, setPage] = useState(1); // Current page
   const [type, setType] = useState("");
   const [user, setUser] = useState("");
   const [logDate, setLogDate] = useState<Date | undefined>(undefined);
   const { data: result, isLoading: logsLoading } = useGetLogs(
-    storeId,
     page,
     type,
     user,
     logDate
   );
-  const { data: users, isLoading: userLoading } = useGetUsers(storeId);
+  const { data: users, isLoading: userLoading } = useGetUsers();
 
   const handlePageChange = (page: number) => {
     setPage(page);

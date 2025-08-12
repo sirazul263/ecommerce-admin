@@ -1,6 +1,5 @@
 "use client";
 
-import { useStoreId } from "@/hooks/use-store-id";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,11 +16,10 @@ export interface NavigationProps {
 
 const Navigation = ({ routes }: NavigationProps) => {
   const pathname = usePathname();
-  const storeId = useStoreId();
   return (
     <ul className="flex flex-col">
       {routes.map((item) => {
-        const fullHref = `/${storeId}/${item.href}`;
+        const fullHref = `/${item.href}`;
         const isActive = pathname === fullHref;
         const icon = isActive ? item.activeIcon : item.icon;
 

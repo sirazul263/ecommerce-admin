@@ -1,11 +1,11 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { getErrorMessage } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-export const useGetAnalytics = (storeId: string) => {
+export const useGetAnalytics = () => {
   const query = useQuery({
     queryKey: ["dashboard"],
     queryFn: async () => {
-      const response = await axiosInstance.get(`${storeId}/dashboard`);
+      const response = await axiosInstance.get(`/dashboard`);
       if (response.status !== 200) {
         return {
           status: response.status,

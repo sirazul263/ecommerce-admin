@@ -17,14 +17,12 @@ import { User } from "@/features/members/types";
 import { useGetSells } from "@/features/sell/api/use-get-sells";
 import { columns } from "@/features/sell/components/columns";
 import { DataTable } from "@/features/sell/components/data-table";
-import { useStoreId } from "@/hooks/use-store-id";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RiAddCircleFill } from "react-icons/ri";
 
 export const SellClient = () => {
   const router = useRouter();
-  const storeId = useStoreId();
   const [page, setPage] = useState(1); // Current page
   const [invoiceId, setInvoiceId] = useState("");
   const [customer, setCustomer] = useState("");
@@ -33,7 +31,6 @@ export const SellClient = () => {
   const [sellDate, setSellDate] = useState<Date | undefined>(undefined);
 
   const { data: result, isLoading: sellLoading } = useGetSells(
-    storeId,
     page,
     invoiceId,
     customer,
@@ -41,7 +38,7 @@ export const SellClient = () => {
     paymentStatus,
     sellDate
   );
-  const { data: users, isLoading: usersLoading } = useGetUsers(storeId);
+  const { data: users, isLoading: usersLoading } = useGetUsers();
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -147,7 +144,7 @@ export const SellClient = () => {
         <div className="flex items-center justify-end md:mt-6">
           <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => router.push(`/${storeId}/sells/create`)}
+            onClick={() => router.push(`/sells/create`)}
           >
             <p className="text-xs uppercase font-bold text-neutral-500 ">
               Add New Sell
